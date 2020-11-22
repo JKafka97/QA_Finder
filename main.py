@@ -1,6 +1,7 @@
 import sys
 import openpyxl
 import os
+import PyPDF2
 from pathlib import Path
 
 source_list = []
@@ -10,7 +11,7 @@ def main():
     source_path = get_source_link()
     target_path = get_target_link()
     print(show_source_to_user(source_path))
-    print(get_pdf_name(target_path))
+    print(page_numb_target(target_path))
 
 
 def get_source_link():
@@ -56,6 +57,13 @@ def get_pdf_name(target_path):
     base=os.path.basename(target_path)
     pdf_name = os.path.splitext(base)[0]
     return pdf_name
+
+
+def page_numb_target(target_path):
+    pdfFileObj = open(target_path, 'rb') 
+    pdfReader = PyPDF2.PdfFileReader(pdfFileObj) 
+    num_pages = pdfReader.numPages 
+    return num_pages
 
 
 def make_clean_text():
